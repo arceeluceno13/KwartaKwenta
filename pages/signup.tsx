@@ -29,8 +29,8 @@ const Signup = () => {
     validate: signup_validation,
   });
 
-  function signup(values) {
-    setLoading(true);
+  function signup(values: { email: string, name: string, password: string, acceptTos: boolean }) {
+      setLoading(true);
 
     axiosInstance
       .post(`/api/auth/signup`, values)
