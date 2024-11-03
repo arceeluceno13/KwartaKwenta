@@ -7,29 +7,29 @@ import argon from "argon2";
 
 export default NextAuth({
   providers: [
-    // Google Provider
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
+    // // Google Provider
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_ID,
+    //   clientSecret: process.env.GOOGLE_SECRET,
 
-      async profile(profile) {
-        connectDatabase();
+    //   async profile(profile) {
+    //     connectDatabase();
 
-        const email = profile.email;
-        const name = profile.name;
-        const image = profile.picture;
+    //     const email = profile.email;
+    //     const name = profile.name;
+    //     const image = profile.picture;
 
-        const exist_user = await User.findOne({ email });
-        if (!exist_user) User.create({ email, name, balance: 0, image });
+    //     const exist_user = await User.findOne({ email });
+    //     if (!exist_user) User.create({ email, name, balance: 0, image });
 
-        return {
-          id: profile.sub,
-          name,
-          email,
-          image,
-        };
-      },
-    }),
+    //     return {
+    //       id: profile.sub,
+    //       name,
+    //       email,
+    //       image,
+    //     };
+    //   },
+    // }),
 
     // With CustomCredentials
     CredentialsProvider({

@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
+import { useSession } from "next-auth/react";
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
+import TostMessage from '../components/Utils/TostMessage';
 
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const { data: session, status } = useSession<any>();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/');
+    }
+  }, [status, router]);
+  
 
   const formik = useFormik({
     initialValues: {
@@ -82,10 +92,19 @@ const Login = () => {
               <button
                 type="submit"
                 className="w-full h-16 bg-emerald-700 text-white text-lg md:text-xl lg:text-2xl font-bold font-['Poppins'] rounded-lg shadow mt-6"
-                disabled={loading}
-              >
+                disabled={loading} >
                 {loading ? "Logging in..." : "Log in"}
               </button>
+
+              <button
+                type="button"
+                className="w-full h-16 bg-emerald-700 text-white text-lg md:text-xl lg:text-2xl font-bold font-['Poppins'] rounded-lg shadow mt-6"
+                disabled={loading}
+                onClick={() => router.push("/signup")} >
+                Sign Up
+              </button>
+              
+
             </form>
           </div>
         </div>
