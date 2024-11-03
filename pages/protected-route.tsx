@@ -1,10 +1,15 @@
 import { getSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import React from "react";
+
+const signOutHandle = () => {
+  signOut();
+};
 
 const TermsAndConditions = () => {
   return (
-    <div className="min-h-screen">
-      <div className="container p-6 space-y-5">
+    <div className="min-h-screen ">
+      <div className="container p-6 space-y-5 ">
         <p className="text-base text-gray-700">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae
           alias, in placeat, itaque laudantium quas rerum tempore consequatur
@@ -35,12 +40,7 @@ const TermsAndConditions = () => {
           veritatis quaerat laudantium facilis, perspiciatis quidem? Aut illum
           fugiat repellat dolorum.
         </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-          impedit eum laboriosam culpa quod ex architecto iusto natus quisquam
-          aliquam, cumque expedita animi inventore itaque quibusdam quidem
-          voluptates dicta. Sed!
-        </p>
+        <button onClick={signOutHandle} className="content-center mx-auto border">SignOut</button>
       </div>
     </div>
   );

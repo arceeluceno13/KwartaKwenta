@@ -5,19 +5,16 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
 import TostMessage from '../components/Utils/TostMessage';
+import { GetServerSideProps } from 'next';
+import { getSession } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const { data: session, status } = useSession<any>();
-
-  useEffect(() => {
-    if (status === 'authenticated') {
-      router.push('/');
-    }
-  }, [status, router]);
   
+
 
   const formik = useFormik({
     initialValues: {
@@ -114,3 +111,18 @@ const Login = () => {
 };
 
 export default Login;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}
