@@ -12,6 +12,8 @@ import InputErrorMessage from "../components/Utils/InputErrorMessage";
 import axiosInstance from "../lib/axiosInstance";
 import { useRouter } from "next/router";
 import TostMessage from "../components/Utils/TostMessage";
+import { GetServerSideProps } from 'next';
+
 
 const Signup = () => {
   const router = useRouter();
@@ -173,17 +175,17 @@ const Signup = () => {
 
 export default Signup;
 
-export async function getServerSideProps({ req }) {
-  const session = await getSession({ req });
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
   if (session) {
     return {
       redirect: {
-        destination: "/",
+        destination: '/',
         permanent: false,
       },
     };
   }
   return {
-    props: { session },
+    props: {},
   };
 }

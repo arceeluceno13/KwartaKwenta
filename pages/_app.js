@@ -4,9 +4,6 @@ import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
 
-// Components Header & Footer
-import Footer from "../components/Others/Footer";
-import Header from "../components/Others/Header";
 
 // next auth Session Provider
 import { SessionProvider } from "next-auth/react";
