@@ -1,19 +1,28 @@
 "use client";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
+  const { status } = useSession();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/home"); // Redirect authenticated users to /home
+    }
+  }, [status, router]);
+
+  if (status === "authenticated") return null; // Prevent flicker
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    
+
     const result = await signIn("credentials", {
       email,
       password,
